@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% block title %}Add Goat{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col">
+		<section>
+			<form method="POST" autocomplete="false">
+				{% csrf_token %}
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col">
+							<span><h4>Add Livestock</h4></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col col-sm-4 col-md-2 py-2">Eartag ID<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col-12 col-sm-8 col-md-10 col-xl-4">
+									<input type="text" name="eartag_id" placeholder="" class="form-control" value="{% if form.eartag_id.value %}{{ form.eartag_id.value }}{% endif %}" required>
+									{% if form.eartag_id.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.eartag_id.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+								<label class="col-form-label-sm col col-sm-4 col-md-2">Eartag Color<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col-12 col-sm-8 col-md-10 col-xl-4">
+									<!--input type="text" name="" placeholder="" class="form-control" required-->
+									<select class="form-control" name="eartag_color" required>
+										<option value="">-- Please select --</option>
+										<option value="yellow" {% if form.eartag_color.value == 'yellow' %}selected{% endif %}>Yellow</option>
+										<option value="green" {% if form.eartag_color.value == 'green' %}selected{% endif %}>Green</option>
+										<option value="orange" {% if form.eartag_color.value == 'orange' %}selected{% endif %}>Orange</option>
+										<option value="blue" {% if form.eartag_color.value == 'blue' %}selected{% endif %}>Blue</option>
+									</select>
+									{% if form.eartag_color.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.eartag_color.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Nickname<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="text" name="nickname" placeholder="" class="form-control" required value="{% if form.nickname.value %}{{ form.nickname.value }}{% endif %}">
+									{% if form.nickname.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.nickname.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Birth Date<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="text" name="birth_date" id="birth_date" placeholder="YYYY-MM-DD" class="form-control" required value="{% if form.birth_date.value %}{{ form.birth_date.value }}{% endif %}">
+									{% if form.birth_date.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.birth_date.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Body Color<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="text" name="body_color" placeholder="" class="form-control" required value="{% if form.body_color.value %}{{ form.body_color.value }}{% endif %}">
+									{% if form.body_color.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.body_color.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Gender<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<select class="custom-select" name="gender" id="id_gender" required="">
+										<option value="">
+											-- Please Select --
+										</option>
+										<option value="male" {% if form.gender.value == 'male' %}selected{% endif %}>Male</option>
+										<option value="female" {% if form.gender.value == 'female' %}selected{% endif %}>Female</option>
+									</select>
+									{% if form.gender.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.gender.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col col-sm-4 col-md-2 col-lg-2">Is castrated?</label>
+								<div class="col pt-2">
+									<label class="switch">
+  										<input type="checkbox" name="is_castrated">
+  										<span class="slider round"></span>
+									</label>
+									{% if form.is_castrated.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.is_castrated.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+
+						</div>
+	
+						<div class="col">
+
+							<div class="form-row py-2">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Category<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<div class="row">
+										<label class="col-form-label-sm col-6"><input type="radio" name="category" class="" value="birth"{% if not flag %}checked{%endif%} required>&emsp;By Birth</label>
+										<label class="col-form-label-sm col-6"><input type="radio" name="category" class="" value="purchase" required {% if flag %}checked{%endif%}>&emsp;By Purchase</label>
+										<input type="hidden" name="cflag" value="{{ flag }}">
+									</div>
+									{% if form.category.errors%}
+									<small class="form-text text-muted">
+									{% for error in form.category.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+									{% endif %}
+
+								</div>
+							</div>
+							
+							<div class="form-row py-2 biform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Birth Weight<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="number" name="birth_weight" class="form-control" value="{% if plus_form.birth_weight.value %}{{plus_form.birth_weight.value}}{%endif%}">
+									<small class="form-text text-muted">
+									{% for error in plus_form.birth_weight.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>									
+								</div>
+							</div>
+
+							<div class="form-row py-2 biform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Dam<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<select class="form-control" name="dam_id" id="damID-select" value="{% if plus_form.dam_id.value %}{{plus_form.dam_id.value}}{%endif%}">
+										<option value=""></option>
+										{% if dam_rec %}
+										{% for rec in dam_rec %}
+										<option value="{{rec.eartag_id}}">{{rec.eartag_id}}</option>
+										{% endfor %}
+										{% endif %}
+										<!--option value="yellow">Yellow</option>
+										<option value="green">Green</option>
+										<option value="orange">Orange</option>
+										<option value="blue">Blue</option-->
+									</select>
+									<small class="form-text text-muted">
+									{% for error in plus_form.dam_id.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>									
+								</div>
+							</div>
+
+							<div class="form-row py-2 biform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Sire<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<select class="form-control" name="sire_id" id="sireID-select" value="{% if plus_form.sire_id.value %}{{plus_form.sire_id.value}}{%endif%}">
+										<option value=""></option>
+										{% if sire_rec %}
+										{% for rec in sire_rec %}
+										<option value="{{rec.eartag_id}}">{{rec.eartag_id}}</option>
+										{% endfor %}
+										{% endif %}
+										<!--option value="yellow">Yellow</option>
+										<option value="green">Green</option>
+										<option value="orange">Orange</option>
+										<option value="blue">Blue</option-->
+									</select>
+									<small class="form-text text-muted">
+									{% for error in plus_form.sire_id.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>									
+								</div>
+							</div>
+							
+							<div class="form-row py-2 pform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Date<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="text" name="purchase_date" class="form-control" id="purchase_date" value="{% if plus_form.purchase_date.value %}{{plus_form.purchase_date.value}}{%endif%}" placeholder="YYYY-MM-DD">
+									<small class="form-text text-muted">
+									{% for error in plus_form.purchase_date.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+								</div>
+							</div>
+
+							<div class="form-row py-2 pform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase From<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="text" name="purchase_from" class="form-control" value="{% if plus_form.purchase_from.value %}{{plus_form.purchase_from.value}}{%endif%}">
+									<small class="form-text text-muted">
+									{% for error in plus_form.purchase_from.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>									
+								</div>
+							</div>
+
+							<div class="form-row py-2 pform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Price<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="number" name="purchase_price" class="form-control" value="{% if plus_form.purchase_price.value %}{{plus_form.purchase_price.value}}{%endif%}" placeholder="Enter price in peso">
+									<small class="form-text text-muted">
+									{% for error in plus_form.purchase_price.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>									
+								</div>
+							</div>
+
+							<div class="form-row py-2 pform">
+								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Weight<span class="text-danger font-weight-bold">*</span></label>
+								<div class="col">
+									<input type="number" name="purchase_weight" class="form-control" value="{% if plus_form.purchase_weight.value %}{{plus_form.purchase_weight.value}}{%endif%}" placeholder="Enter weight in kilo (kg)">
+									<small class="form-text text-muted">
+									{% for error in plus_form.purchase_weight.errors %}
+									{{  error }}
+									{% endfor %}
+									</small>
+								</div>
+							</div>
+
+							<div class="form-row pt-4">
+								<button type="submit" class="col btn btn-success font-weight-bold">Add Livestock</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</section>
+	</div>
+</div>
+{% endblock %}

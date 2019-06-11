@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}The Python Web Framework{% endblock%}
+{% block content%}
+<section class="container">
+	<div class="row" style="transform: translateY(30%) !important;">
+		<div class="col">
+			<form method="POST" autocomplete="off" class="">
+				{% csrf_token %}
+				<div class="form-row py-2">
+					<div class="col">
+						<input type="text" name="first_name" value="{% if form.first_name.value %}{{ form.first_name.value}}{% endif %}" placeholder="First name" class="form-control">
+						<small class="form-text text-danger">
+						{% for error in form.first_name.errors %}
+						{{  error }}
+						{% endfor %}							
+						</small>
+					</div>
+					<div class="col">
+						<input type="text" name="last_name" value="{% if form.last_name.value %}{{ form.last_name.value}}{% endif %}" placeholder="Last name" class="form-control">
+						<small class="form-text text-danger">
+						{% for error in form.last_name.errors %}
+						{{  error }}
+						{% endfor %}							
+						</small>
+					</div>
+				</div>
+
+				<div class="form-row py-2">
+					<div class="col">
+						<input type="text" name="username" value="{% if form.username.value %}{{ form.username.value}}{% endif %}" placeholder="Username" class="form-control">
+						<small class="form-text text-danger">
+						{% for error in form.username.errors %}
+						{{  error }}
+						{% endfor %}							
+						</small>
+					</div>
+				</div>
+
+				<div class="form-row py-2">
+					<div class="col">
+						<input type="email" name="email" value="{% if form.email.value %}{{ form.email.value}}{% endif %}" placeholder="Email Address" class="form-control">
+						<small class="form-text text-danger">
+						{% for error in form.email.errors %}
+						{{  error }}
+						{% endfor %}							
+						</small>
+					</div>
+				</div>
+
+				<div class="form-row py-2">
+					<div class="col">
+						<input type="password" name="password" value="" placeholder="Password" class="form-control">
+					</div>
+					<div class="col">
+						<input type="password" name="confirm_password" value="" placeholder="Confirm Password" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-row pt-3">
+					<input type="submit" name="" value="Log In" class="btn btn-primary col font-weight-bold">
+				</div>
+				
+				<div class="form-row py-2">
+					<p class="py-2 col-12">Already have an account? <a class="d-inline-block nav-link font-weight-bold px-0 text-success" href="/auth/login">Log In</a></p>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+{% endblock %}

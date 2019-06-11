@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}The Python Web Framework{% endblock%}
+{% block content%}
+<section class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<section class="px-3">
+				<h1>Logged out</h1>
+				<p>Thanks for spending some quality time with the Web site today.</p>
+			</section>
+		</div>
+	</div>
+	<div class="row px-3">
+		<div class="col">
+			<a class="btn btn-outline-primary" href="{% url 'uauth:login' %}">Log in</a>
+		</div>
+	</div>
+</section>
+{% endblock %}

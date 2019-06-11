@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}The Python Web Framework{% endblock%}
+{% block content%}
+<section>
+	<div class="container">
+
+		<div class="row">
+			<div class="col">
+				<form method="POST" autocomplete="off" style="transform: translateY(10%) !important;">
+					{% csrf_token %}
+
+					{% if messages %}
+					{% for message in messages %}
+					<div class="form-row py-2">
+						<div class="col">
+							{% if message.level == 30 %}		
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								<strong><i class="fa fa-exclamation-triangle"></i></strong>&emsp;{{ message }}.
+				  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    				<span aria-hidden="true">&times;</span>
+				  				</button>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+
+					{% endfor %}
+					{% endif %}
+
+					<div class="form-row py-2">
+						<div class="col">
+							<input type="text" name="username" value="" placeholder="Username" class="form-control" required="">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<div class="col">
+							<input type="password" name="password" value="" placeholder="Password" class="form-control" required="">
+						</div>
+					</div>
+
+
+					<div class="form-row pt-3">
+						<input type="submit" name="" value="Log In" class="btn btn-primary col font-weight-bold">
+					</div>
+
+					<div class="form-row py-2">
+						<div class="col-12 col-lg-6 text-center text-lg-left">
+							<span >Don't have an account? <a class="nav-link text-primary d-inline-block text-success font-weight-bold" href="{% url 'uauth:signup' %}">Create Account</a></span>
+						</div>
+
+						<div class="col-12 col-lg-6 text-center text-lg-right">
+							<a class="nav-link text-primary d-inline-block font-weight-bold" href="{% url 'uauth:signup' %}">Forgot Password</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>{{ title }}&nbsp;&dash;&nbsp;{% block title %}{% endblock %} </title>
+	<link rel="stylesheet" type="text/css" href="{% static 'dist/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap4.min.css' %}">		
+	<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-editable-select.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/tail.datetime-default.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/tagify.css' %}">
+</head>
+
+<body>
+
+<div class="container-fluid px-0">
+	{% block content %}
+	{% endblock %}
+</div>
+<script type="text/javascript" src="{% static 'dist/js/jquery-3.3.1.slim.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'dist/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'dist/js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-editable-select.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tail.datetime.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jQuery.tagify.min.js' %}"></script>
+</body>
+
+
+</html>

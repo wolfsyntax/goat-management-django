@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Add Transaction{% endblock %}
+{% block content %}
+
+<div class="row py-2">
+	<div class="col">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa fa-plus"></i><span class="card-title">&emsp;Add Sale</span>
+			</div>
+			<div class="card-body">
+				<form method="POST">
+					{% csrf_token %}
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Tag ID
+						</label>
+
+						<div class="col">
+							<input type="number" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Date Sold
+						</label>
+
+						<div class="col">
+							<input type="date" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Sold Through
+						</label>
+
+						<div class="col">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Weight
+						</label>
+
+						<div class="col">
+							<input type="number" class="form-control" placeholder="Enter weight in lbs.">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Amount
+						</label>
+
+						<div class="col">
+							<input type="number" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-row py-2">
+						<label class="col-form-label-sm col-12 col-sm-3 col-lg-2">
+							Description
+						</label>
+
+						<div class="col">
+							<textarea class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="form-row py-2">
+						<div class="btn btn-group col-12 col-md-6 offset-md-6">
+							<button type="reset" class="btn btn-dark font-weight-bold w-100">Reset</button>
+							<button type="submit" class="btn btn-success font-weight-bold w-100">Add Sales</button>
+						</div>
+					</div>
+				</form>
+			</div>s
+		</div>
+	</div>
+</div>
+{% endblock %}

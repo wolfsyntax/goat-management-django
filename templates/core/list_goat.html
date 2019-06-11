@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Add Goat{% endblock %}
+{% block content %}
+<div class="row px-3 px-md-5 mt-3">
+	<div class="col">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-inline-block bg-light py-2"><i class="fa fa-list d-inline-block"></i><span class="card-title">&emsp;Goat Management</span></div>
+				<a href="{%url 'core:new_goat'%}" class="float-right nav-link d-inline-block text-success"><i class="fa fa-plus"></i>&emsp;Add Livestock</a>
+			</div>
+
+			<div class="card-body">
+				<div class="row table-responsive table-responsive-sm text-nowrap">
+					<div class="col">
+						<table id="" class="table table-striped">
+							<thead>
+								<th>Eartag ID</th>
+								<th>Eartag Color</th>
+								<th>Nickname</th>
+								<th>Birth Date</th>
+								<th>Gender</th>
+								<th>Body Color</th>
+								<th>Status</th>
+								<th>Category</th>
+							</thead>
+							<tbody>
+							{% if goat_rec %}
+
+							{% for gc in goat_rec %}
+							<tr>
+								<td>{{gc.eartag_id}}</td>
+								<td>{{gc.eartag_color|title}}</td>
+								<td>{{gc.nickname|title}}</td>
+								<td>{{gc.birth_date}}</td>
+								<td>{{gc.gender|title}}</td>
+								<td>{{gc.body_color|title}}</td>
+								<td>{{gc.status|title}}</td>
+								<td>{{gc.category|title}}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

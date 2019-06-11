@@ -1,0 +1,138 @@
+@font-face {
+    font-family: Calli;
+    src: url('../fonts/Raleway-Regular.ttf');
+}
+
+/*@import url('jquery-editable-select.min.css');
+@import url('jquery.dataTables.min.css');
+@import url('dataTables.bootstrap4.min.css');
+*/
+body {
+	/*font-family: 'Montserrat', sans-serif !important;*/
+	font-family: 'Raleway', sans-serif !important;
+}
+
+.zround {
+	border-radius: 0 !important;
+}
+
+.parent-form {
+	position: relative !important;
+}
+
+.child-form {
+	position: absolute;
+	top: 50%;
+	transform: translateY(45%) !important;
+}
+
+.card-bg {
+	background-color: #ebf6fd !important;
+	color: #000033 !important;
+}
+
+.table-borderless th, .table-borderless td {
+	border-top: 1px solid #fff;
+}
+
+.bg-gray-t1 {
+	background-color: #808080 !important;
+}
+
+.bg-gray-t2 {
+	background-color: #8c8c8c !important;
+}
+
+.bg-gray-t3 {
+	background-color: #999999 !important;
+}
+
+.bg-gray-t4 {
+	background-color: #a6a6a6 !important;
+}
+
+.bg-gray-t5 {
+	background-color: #b2b2b2 !important;
+}
+
+.bg-gray-t6 {
+	background-color: #bfbfbf !important;
+}
+
+.bg-gray-t7 {
+	background-color: #cccccc !important;
+}
+
+.bg-gray-t8 {
+	background-color: #d8d8d8 !important;
+}
+
+.bg-gray-t9 {
+	background-color: #e5e5e5 !important;
+}
+
+
+/** w3school.com **/
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px; /* 60px */
+  height: 17px; /* 34px */
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* #ccc*/
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before { /* circle inside the slider */
+  position: absolute;
+  content: "";
+  height: 13px; /* 26px */
+  width: 13px; /* 26px */
+  left: 4px;
+  bottom: 2.5px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
