@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect, get_object_or_404
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -41,7 +41,7 @@ def index(request):
 				if extra_form.is_valid():
 					#return HttpResponse("Birth Info is submitted and validated")	
 					goatInfForm.save()
-					extra_form.save()
+					extra_form.save(cd['eartag_id'])
 					print("Goat Birth Form is valid.\n")
 			print("Extras: {}\n".format(extra_form.cleaned_data))
 			context.setdefault('plus_form',extra_form)
@@ -84,10 +84,18 @@ def edit_goat(request, tag_id):
 
 @login_required(login_url='/auth/login')
 def view_goat(request, tag_id):
-
+	goat_info = get_object_or_404(GoatProfile, eartag_id=tag_id)
+	if goat_info.category == 'birth':
+		extra_info = get_object_or_404(Birth_record, eartag_id=tag_id)
+	else:
+		extra_info = get_object_or_404(Purchase_record, eartag_id=tag_id)
+	
 	context = {
-		'title': 'GOAT'
+		'title': 'GOAT',
+		'goat_rec' : goat_info,#GoatProfile.objects.get(eartag_id=tag_id)
+		'plus_form': extra_info
 	}
+	
 
 	return render(request,'core/show_goat.html',context)	
 	#return HttpResponse('Goat Manage (view): {}'.format(tag_id))

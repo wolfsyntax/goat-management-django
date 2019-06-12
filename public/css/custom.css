@@ -26,6 +26,24 @@ body {
 	transform: translateY(45%) !important;
 }
 
+.bg-orange {
+  background-color: #fd7e14 !important;
+}
+
+.custom-filter {
+  margin-right: 0px !important;
+}
+
+.breadcrumb-item a{
+  text-decoration: none !important;
+}
+@media (min-width: 576px) {
+.custom-filter {
+  right: 0px !important;
+  top: 0px !important;
+  position: relative;
+}
+}
 .card-bg {
 	background-color: #ebf6fd !important;
 	color: #000033 !important;

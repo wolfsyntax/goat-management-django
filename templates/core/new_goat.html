@@ -3,6 +3,18 @@
 {% block content %}
 <div class="row">
 	<div class="col">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#" style="">Dashboard</a></li>
+				<li class="breadcrumb-item"><a href="/goat/">Manage Goat</a></li>
+				<li class="breadcrumb-item active" aria-current="page">New Goat</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
 		<section>
 			<form method="POST" autocomplete="false">
 				{% csrf_token %}
@@ -262,11 +274,15 @@
 							</div>
 
 							<div class="form-row pt-4">
-								<button type="submit" class="col btn btn-success font-weight-bold">Add Livestock</button>
+								<div class="btn-group col-12">
+									<button type="reset" class="w-50 btn btn-default font-weight-bold">Clear</button>
+									<button type="submit" class="w-50 btn btn-success font-weight-bold">Add Livestock</button>
+								</div>
 							</div>
-
 						</div>
 					</div>
+
+
 				</div>
 			</form>
 		</section>

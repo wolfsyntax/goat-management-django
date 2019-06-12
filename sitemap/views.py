@@ -33,6 +33,12 @@ def faq(request):
 	return render(request, 'sitemap/faq.html', context)
 #	return HttpResponse('Support page')	
 
+def dashboard(request):
+	context = {
+		'title' : 'Django'
+	}
+	return render(request, 'sitemap/about.html', context)
+		
 ## Custom Error Page
 def custom404(request, exception):
 	return HttpResponse("PAGE NOT FOUND")

@@ -47,7 +47,7 @@ class GoatProfile(models.Model):
 class Purchase_record(models.Model):
 	purchase_id = models.AutoField(primary_key=True)
 	purchase_weight = models.DecimalField(decimal_places=2, max_digits=8)
-	purchase_price = models.FloatField()
+	purchase_price = models.DecimalField(decimal_places=2, max_digits=8)
 	purchase_date = models.DateField(auto_now=True)
 	purchase_from = models.CharField(max_length=250)
 	eartag = models.ForeignKey(GoatProfile, related_name='purchase_goat', on_delete=models.CASCADE)

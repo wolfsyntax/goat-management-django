@@ -168,7 +168,7 @@ class GoatInfoForm(forms.Form):
 class GoatPurchaseForm(forms.Form):
 	
 	purchase_weight = forms.DecimalField(decimal_places=2, min_value=0,max_digits=8, error_messages={'required': 'Purchase weight is required.', 'max_decimal_places': 'Purchase weight must be exact 2 decimal places.', 'invalid': 'Purchase weight must contain a decimal number.', 'min_value': 'Purchase weight must contain a number greater than or equat to 0','max_digits': 'Purchase weight cannot exceed 8 digits in length.'})
-	purchase_price = forms.FloatField(max_value=100000,min_value=0, error_messages={'required':'Purchase Price is required.','invalid':'Purchase price must contain only decimal number.','min_value': 'Purchase price must contain a number greater than or equal to 0', 'max_value': 'Purchase price must contain a number less than or equal 100000'})
+	purchase_price = forms.DecimalField(decimal_places=2, min_value=0,max_digits=8, error_messages={'required': 'Purchase price is required.', 'max_decimal_places': 'Purchase price must be exact 2 decimal places.', 'invalid': 'Purchase price must contain a decimal number.', 'min_value': 'Purchase price must contain a number greater than or equat to 0','max_digits': 'Purchase price cannot exceed 8 digits in length.'})#FloatField(max_value=100000,min_value=0, error_messages={'required':'Purchase Price is required.','invalid':'Purchase price must contain only decimal number.','min_value': 'Purchase price must contain a number greater than or equal to 0', 'max_value': 'Purchase price must contain a number less than or equal 100000'})
 	purchase_date = forms.DateField(error_messages={'required': 'Purchase date is required.','invalid': 'Purchase Date must be in the following format: yyyy-mm-dd.'})
 	purchase_from = forms.CharField(max_length=250,min_length=4, error_messages={'required':'Purchase From is required.', 'min_length': 'Purchase From must be at least 4 characters in length.', 'max_length':'Purchase From cannot exceed 250 characters in length.'})
 	#eartag = models.ForeignKey(GoatProfile, related_name='purchase_goat', on_delete=models.CASCADE)
@@ -278,13 +278,13 @@ class BirthInfoForm(forms.Form):
 		
 		return value	
 
-	def save(self):	
+	def save(self,eid):	
 
 		sire = self.cleaned_data.get('sire_id','')	
 		dam = self.cleaned_data.get('dam_id','')	
 		birth_weight = self.cleaned_data.get('birth_weight','')	
 		
-		info = Birth_record(sire_id=sire,dam_id=dam,birth_weight=birth_weight)
+		info = Birth_record(sire_id=sire,dam_id=dam,birth_weight=birth_weight,eartag_id=eid)
 
 		return info.save()
 
