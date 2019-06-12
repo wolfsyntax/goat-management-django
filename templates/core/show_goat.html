@@ -5,7 +5,7 @@
 	<div class="col">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#" style="">Dashboard</a></li>
+				<li class="breadcrumb-item"><a href="/dashboard" style="">Dashboard</a></li>
 				<li class="breadcrumb-item"><a href="/goat/">Manage Goat</a></li>
 				<li class="breadcrumb-item active" aria-current="page">Goat Details</li>
 			</ol>
@@ -117,7 +117,7 @@
 											<a href="/goat/" class="btn nav-link w-50">
 												<i class="fa fa-arrow-left"></i>&emsp;Back
 											</a>
-											<a href="" class="btn nav-link w-50">
+											<a href="/goat/{{goat_rec.eartag_id}}/edit" class="btn nav-link w-50">
 												<i class="fa fa-pencil"></i>&emsp;Edit
 											</a>
 										</section>
@@ -165,7 +165,7 @@
 							</table>
 						</div>
 						
-						<div class="card-footer text-muted px-0 bg-transparent border-0">
+						<!--div class="card-footer text-muted px-0 bg-transparent border-0">
 							<div class="container-fluid">
 								<div class="row">
 									<div class="col">
@@ -180,12 +180,23 @@
 									</div>
 								</div>
 							</div>	
-						</div>
+						</div-->
 					</div>
 					{% endif %}
 				</div>
 			</div>
-
+			<div class="row py-2 my-3">
+				<div class="col">
+					<a href="" class="nav-link text-left text-success">
+						<i class="fa fa-angle-left fa-lg font-weight-bold"></i>&emsp;Back
+					</a>
+				</div>
+				<div class="col">
+					<a href="/goat/{{goat_rec.eartag_id}}/edit" class="nav-link text-right text-dark btn-link">
+						<i class="fa fa-pencil"></i>&emsp;Edit
+					</a>
+				</div>
+			</div>
 			<div class="row py-3 mt-2 mb-5">
 				<div class="col">
 					<div class="card">

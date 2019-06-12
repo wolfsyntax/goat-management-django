@@ -7,7 +7,7 @@
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="/dashboard" style="">Dashboard</a></li>
 				<li class="breadcrumb-item"><a href="/goat/">Manage Goat</a></li>
-				<li class="breadcrumb-item active" aria-current="page">New Goat</li>
+				<li class="breadcrumb-item active" aria-current="page">Update record</li>
 			</ol>
 		</nav>
 	</div>
@@ -21,7 +21,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col">
-							<span><h4>Add Livestock</h4></span>
+							<span><h4>Modify details</h4></span>
 						</div>
 					</div>
 					<div class="row">
@@ -29,7 +29,7 @@
 							<div class="form-row py-2">
 								<label class="col-form-label-sm col col-sm-4 col-md-2 py-2">Eartag ID<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col-12 col-sm-8 col-md-10 col-xl-4">
-									<input type="text" name="eartag_id" placeholder="" class="form-control" value="{% if form.eartag_id.value %}{{ form.eartag_id.value }}{% endif %}" required>
+									<input type="text" name="eartag_id" placeholder="" class="form-control" value="{% if form.eartag_id.value %}{{ form.eartag_id.value }}{% else%}{{goat_rec.eartag_id}}{% endif %}" required>
 									{% if form.eartag_id.errors%}
 									<small class="form-text text-muted">
 									{% for error in form.eartag_id.errors %}
@@ -44,10 +44,10 @@
 									<!--input type="text" name="" placeholder="" class="form-control" required-->
 									<select class="form-control" name="eartag_color" required>
 										<option value="">-- Please select --</option>
-										<option value="yellow" {% if form.eartag_color.value == 'yellow' %}selected{% endif %}>Yellow</option>
-										<option value="green" {% if form.eartag_color.value == 'green' %}selected{% endif %}>Green</option>
-										<option value="orange" {% if form.eartag_color.value == 'orange' %}selected{% endif %}>Orange</option>
-										<option value="blue" {% if form.eartag_color.value == 'blue' %}selected{% endif %}>Blue</option>
+										<option value="yellow" {% if form.eartag_color.value == 'yellow' or goat_rec.eartag_color == 'yellow' %}selected{% endif %}>Yellow</option>
+										<option value="green" {% if form.eartag_color.value == 'green' or goat_rec.eartag_color == 'green' %}selected{% endif %}>Green</option>
+										<option value="orange" {% if form.eartag_color.value == 'orange' or goat_rec.eartag_color == 'orange' %}selected{% endif %}>Orange</option>
+										<option value="blue" {% if form.eartag_color.value == 'blue' or goat_rec.eartag_color == 'blue' %}selected{% endif %}>Blue</option>
 									</select>
 									{% if form.eartag_color.errors%}
 									<small class="form-text text-muted">
@@ -63,7 +63,7 @@
 							<div class="form-row py-2">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Nickname<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="text" name="nickname" placeholder="" class="form-control" required value="{% if form.nickname.value %}{{ form.nickname.value }}{% endif %}">
+									<input type="text" name="nickname" placeholder="" class="form-control" required value="{% if form.nickname.value %}{{ form.nickname.value|title }}{% else%}{{goat_rec.nickname|title}}{% endif %}">
 									{% if form.nickname.errors%}
 									<small class="form-text text-muted">
 									{% for error in form.nickname.errors %}
@@ -78,7 +78,7 @@
 							<div class="form-row py-2">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Birth Date<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="text" name="birth_date" id="birth_date" placeholder="YYYY-MM-DD" class="form-control" required value="{% if form.birth_date.value %}{{ form.birth_date.value }}{% endif %}">
+									<input type="text" name="birth_date" id="birth_date" placeholder="YYYY-MM-DD" class="form-control" required value="{% if form.birth_date.value %}{{ form.birth_date.value }}{% else%}{{goat_rec.birth_date}}{% endif %}">
 									{% if form.birth_date.errors%}
 									<small class="form-text text-muted">
 									{% for error in form.birth_date.errors %}
@@ -93,7 +93,7 @@
 							<div class="form-row py-2">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Body Color<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="text" name="body_color" placeholder="" class="form-control" required value="{% if form.body_color.value %}{{ form.body_color.value }}{% endif %}">
+									<input type="text" name="body_color" placeholder="" class="form-control" required value="{% if form.body_color.value %}{{ form.body_color.value }}{% else%}{{goat_rec.body_color|title}}{% endif %}">
 									{% if form.body_color.errors%}
 									<small class="form-text text-muted">
 									{% for error in form.body_color.errors %}
@@ -112,8 +112,8 @@
 										<option value="">
 											-- Please Select --
 										</option>
-										<option value="male" {% if form.gender.value == 'male' %}selected{% endif %}>Male</option>
-										<option value="female" {% if form.gender.value == 'female' %}selected{% endif %}>Female</option>
+										<option value="male" {% if form.gender.value == 'male' or goat_rec.gender == 'male' %}selected{% endif %}>Male</option>
+										<option value="female" {% if form.gender.value == 'female' or goat_rec.gender == 'female' %}selected{% endif %}>Female</option>
 									</select>
 									{% if form.gender.errors%}
 									<small class="form-text text-muted">
@@ -130,7 +130,7 @@
 								<label class="col-form-label-sm col col-sm-4 col-md-2 col-lg-2">Is castrated?</label>
 								<div class="col pt-2">
 									<label class="switch">
-  										<input type="checkbox" name="is_castrated">
+  										<input type="checkbox" name="is_castrated" {% if goat_rec.is_castrated %}checked{%endif%}>
   										<span class="slider round"></span>
 									</label>
 									{% if form.is_castrated.errors%}
@@ -170,7 +170,7 @@
 							<div class="form-row py-2 biform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Birth Weight<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="number" name="birth_weight" class="form-control" value="{% if plus_form.birth_weight.value %}{{plus_form.birth_weight.value}}{%endif%}">
+									<input type="number" name="birth_weight" class="form-control" value="{% if plus_form.birth_weight.value %}{{plus_form.birth_weight.value}}{% else%}{{extra_rec.birth_weight}}{%endif%}">
 									<small class="form-text text-muted">
 									{% for error in plus_form.birth_weight.errors %}
 									{{  error }}
@@ -182,7 +182,7 @@
 							<div class="form-row py-2 biform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Dam<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<select class="form-control" name="dam_id" id="damID-select" value="{% if plus_form.dam_id.value %}{{plus_form.dam_id.value}}{%endif%}">
+									<select class="form-control" name="dam_id" id="damID-select" value="{% if plus_form.dam_id.value %}{{plus_form.dam_id.value}}{% else%}{{extra_rec.dam_id}}{%endif%}">
 										<option value=""></option>
 										{% if dam_rec %}
 										{% for rec in dam_rec %}
@@ -205,7 +205,7 @@
 							<div class="form-row py-2 biform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Sire<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<select class="form-control" name="sire_id" id="sireID-select" value="{% if plus_form.sire_id.value %}{{plus_form.sire_id.value}}{%endif%}">
+									<select class="form-control" name="sire_id" id="sireID-select" value="{% if plus_form.sire_id.value %}{{plus_form.sire_id.value}}{% else%}{{extra_rec.sire_id}}{%endif%}">
 										<option value=""></option>
 										{% if sire_rec %}
 										{% for rec in sire_rec %}
@@ -228,7 +228,7 @@
 							<div class="form-row py-2 pform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Date<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="text" name="purchase_date" class="form-control" id="purchase_date" value="{% if plus_form.purchase_date.value %}{{plus_form.purchase_date.value}}{%endif%}" placeholder="YYYY-MM-DD">
+									<input type="text" name="purchase_date" class="form-control" id="purchase_date" value="{% if plus_form.purchase_date.value %}{{plus_form.purchase_date.value}}{% else%}{{extra_rec.purchase_date}}{%endif%}" placeholder="YYYY-MM-DD">
 									<small class="form-text text-muted">
 									{% for error in plus_form.purchase_date.errors %}
 									{{  error }}
@@ -240,7 +240,7 @@
 							<div class="form-row py-2 pform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase From<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="text" name="purchase_from" class="form-control" value="{% if plus_form.purchase_from.value %}{{plus_form.purchase_from.value}}{%endif%}">
+									<input type="text" name="purchase_from" class="form-control" value="{% if plus_form.purchase_from.value %}{{plus_form.purchase_from.value}}{% else%}{{extra_rec.purchase_from}}{%endif%}">
 									<small class="form-text text-muted">
 									{% for error in plus_form.purchase_from.errors %}
 									{{  error }}
@@ -252,7 +252,7 @@
 							<div class="form-row py-2 pform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Price<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="number" name="purchase_price" class="form-control" value="{% if plus_form.purchase_price.value %}{{plus_form.purchase_price.value}}{%endif%}" placeholder="Enter price in peso">
+									<input type="number" name="purchase_price" class="form-control" value="{% if plus_form.purchase_price.value %}{{plus_form.purchase_price.value}}{% else%}{{extra_rec.purchase_price}}{%endif%}" placeholder="Enter price in peso">
 									<small class="form-text text-muted">
 									{% for error in plus_form.purchase_price.errors %}
 									{{  error }}
@@ -264,7 +264,7 @@
 							<div class="form-row py-2 pform">
 								<label class="col-form-label-sm col-12 col-sm-4 col-md-2 col-lg-2">Purchase Weight<span class="text-danger font-weight-bold">*</span></label>
 								<div class="col">
-									<input type="number" name="purchase_weight" class="form-control" value="{% if plus_form.purchase_weight.value %}{{plus_form.purchase_weight.value}}{%endif%}" placeholder="Enter weight in kilo (kg)">
+									<input type="number" name="purchase_weight" class="form-control" value="{% if plus_form.purchase_weight.value %}{{plus_form.purchase_weight.value}}{% else%}{{extra_rec.purchase_weight}}{%endif%}" placeholder="Enter weight in kilo (kg)">
 									<small class="form-text text-muted">
 									{% for error in plus_form.purchase_weight.errors %}
 									{{  error }}
@@ -276,7 +276,7 @@
 							<div class="form-row pt-4">
 								<div class="btn-group col-12">
 									<button type="reset" class="w-50 btn btn-default font-weight-bold">Clear</button>
-									<button type="submit" class="w-50 btn btn-success font-weight-bold">Add Livestock</button>
+									<button type="submit" class="w-50 btn btn-success font-weight-bold">Save changes</button>
 								</div>
 							</div>
 						</div>

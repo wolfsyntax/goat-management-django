@@ -30,7 +30,7 @@ def index(request):
 			if user.is_active :
 
 				login(request, user)
-				user_req = '/goat'
+				user_req = '/dashboard'
 	
 				if 'next' in request.GET :
 					user_req = request.GET['next']

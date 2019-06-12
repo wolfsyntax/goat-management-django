@@ -201,8 +201,13 @@ class GoatPurchaseForm(forms.Form):
 		purchase_from = self.cleaned_data.get('purchase_from','')
 		eartag_id = eid
 		user_id = uid
-
-		info = Purchase_record(purchase_weight=purchase_weight, purchase_price=purchase_price, purchase_date=purchase_date,purchase_from=purchase_from, eartag_id=eartag_id,user_id=uid)
+		fetch_id = Purchase_record.objects.filter(eartag_id=eartag_id)[0]
+		if fetch_id:
+			info = Purchase_record(purchase_id=fetch_id.purchase_id,purchase_weight=purchase_weight, purchase_price=purchase_price, purchase_date=purchase_date,purchase_from=purchase_from, eartag_id=eartag_id,user_id=uid)	
+		else:
+			info = Purchase_record(purchase_weight=purchase_weight, purchase_price=purchase_price, purchase_date=purchase_date,purchase_from=purchase_from, eartag_id=eartag_id,user_id=uid)
+		#print("Save Purchase ID: {}\n\n".format(fetch_id.purchase_id))
+		#
 		return info.save()
 
 #	class Meta:
@@ -298,3 +303,163 @@ class BirthInfoForm(forms.Form):
 	#	model = Birth_record
 	#	fields = ('dam','sire','eartag',)
 	#	exclude = ('birth',)
+
+class EditInfoForm(forms.Form):
+
+	TAG_COLOR = (
+		('yellow','Yellow'),
+		('green', 'Green'),
+		('orange', 'Orange'),
+		('blue', 'Blue'),
+	)
+
+	GENDER = (
+		('female', 'Female'),
+		('male', 'Male'),
+	)
+
+	STATUS = (
+		('active', 'Active'),
+		('sold', 'Sold'),
+		('deceased', 'Deceased'),
+		('lost', 'Lost'),
+		('stolen', 'Stolen'),
+	)
+
+	CATEGORY = (
+		('birth', 'Birth'),
+		('purchase', 'Purchase'),
+	)
+
+	#print("User: {}".format(user.id))
+	eartag_id = forms.IntegerField(min_value=1, widget=forms.widgets.NumberInput(attrs={'class':'form-control'}), error_messages={'required':'Eartag ID is required.'})
+	eartag_color = forms.ChoiceField(choices=TAG_COLOR, widget=forms.widgets.Select(attrs={'class': 'form-control'}), error_messages={'required':'Eartag Color is required.', 'invalid_choice': 'Eartag Color must be one of: yellow,green,orange,blue.'})
+	nickname = forms.RegexField(regex='^[a-zA-Z]{3}[a-zA-Z ]+$', error_messages={'invalid':'Nickname may only contain alphabetical characters.','required':'Nickname is required.'})#, widget=forms.widgets.TextInput(attrs={'class': 'form-control'}))
+	gender = forms.ChoiceField(choices=GENDER, widget=forms.widgets.Select(attrs={'class': 'form-control'}), error_messages={'required':'Gender is required.', 'invalid_choice': 'Gender must be one of: male, female.'})
+	body_color = forms.CharField(min_length=3,widget=forms.widgets.TextInput(attrs={'class': 'form-control'}), error_messages={'required':'Body Color is required.','min_length': 'Body color must be at least 3 characters in length.'})
+	category = forms.ChoiceField(choices=CATEGORY, widget=forms.widgets.RadioSelect(attrs={'class': 'form-check-input'}), error_messages={'required':'Category is required.','invalid_choice': 'Category must be one of: birth, purchase.'})
+	is_castrated = forms.BooleanField(required=False, widget=forms.widgets.CheckboxInput(attrs={'class': 'form-check-input'}))
+	birth_date = forms.DateField(error_messages={'required':'Birth date is required.','invalid': 'Birth date must be in the following format: yyyy-mm-dd.'})
+
+	def clean(self):
+#		print("\n\nGoat Info Form Validating ->")
+		cd = super(EditInfoForm, self).clean()
+		birth_date = self.cleaned_data.get('birth_date','')
+		eartag_id = self.cleaned_data.get('eartag_id','')
+		eartag_color = self.cleaned_data.get('eartag_color','')
+		nickname = self.cleaned_data.get('nickname','')
+		gender = self.cleaned_data.get('gender','') 
+		body_color = self.cleaned_data.get('body_color','')
+		category = self.cleaned_data.get('category','')
+		is_castrated = self.cleaned_data.get('is_castrated','')
+		birth_date = self.cleaned_data.get('birth_date','')
+		#print("clean (forms.py)::\nBirth Date: {}\nEartag ID: {}\n\n\n".format(birth_date, eartag_id))
+		
+		return cd
+
+	def clean_eartag_id(self):
+		
+		value = self.cleaned_data.get('eartag_id','')	
+		
+		#print("\nclean_eartag_id (forms.py)::\n>Eartag ID: {}\n\n\n".format(value))
+		
+#		if int(value) > 0:
+
+#			try:
+					
+#				user = GoatProfile.objects.get(eartag_id=int(value))
+#				self.add_error('eartag_id','Eartag ID already exist.')
+#				print("Eartag ID already exists.")	
+#			except GoatProfile.DoesNotExist:
+#				print("clean_eartag_id (forms.py)::>Eartag ID: {} (does not exist)\n".format(value))
+					#self.add_error('username','Username does not exist.')
+#				pass
+#		else:
+#			self.add_error('eartag_id','Eartag ID is not valid.')
+
+		return value
+
+	def clean_eartag_color(self):
+
+		value = self.cleaned_data['eartag_color']
+		
+		#self.add_error('first_name','First Name is required.')	
+		if not re.match('^\D{3,}$',value):
+			self.add_error('eartag_color','Eartag Color must only contain alphabetical characters and spaces.')
+		
+		return value
+
+	def clean_nickname(self):
+				
+		value = self.cleaned_data['nickname']
+		#print("\nclean (forms.py)::\n>Nickname: {}\n\n\n".format(value))
+		if len(value) < 4 :
+			self.add_error('nickname','Nickname must be at least 4 characters in length.')
+
+		return value
+
+#	def clean_gender(self):
+#		value = self.cleaned_data['gender']
+		#print("\nclean (forms.py)::\n>Gender: {}\n\n\n".format(value))
+#		return value
+
+	def clean_body_color(self):
+		value = self.cleaned_data['body_color']
+		#print("\nclean (forms.py)::\n>Body Color: {}\n\n\n".format(value))
+		
+		nval = ''.join(e for e in value if e != '[' and e != ']')
+		
+		ls = nval.split(",")
+		lx = []
+		
+		for lprocess in ls:
+			lx.append(lprocess.split(":")[-1][1:-2])
+		
+		value = ', '.join(lx)
+		print("\n\nNew Value: {}\n\n".format(value))
+		if len(value) < 3 :
+			self.add_error('body_color','Body Color must be a valid color name.')
+		else:	
+			if not re.match('^[a-zA-Z]{3}[a-zA-Z, ]*$', value):
+
+				self.add_error('body_color','Body Color must be a valid color name..')
+
+
+		return value
+
+#	def clean_category(self):
+#		value = self.cleaned_data['category']
+		#print("\nclean (forms.py)::\n>Category: {}\n\n\n".format(value))
+
+#		return value
+
+#	def clean_birth_date(self):
+#		value = self.cleaned_data['birth_date']
+		#print("\nclean (forms.py)::\n>Birth: {}\n\n\n".format(value))
+		
+#		return value
+
+	def save(self):
+		print("Goat Info For is saved.\n")
+		eartag_id=self.cleaned_data['eartag_id']
+		eartag_color=self.cleaned_data['eartag_color']
+		nickname=self.cleaned_data['nickname'].lower()
+		gender=self.cleaned_data['gender']
+		body_color=self.cleaned_data['body_color'].lower()
+		category=self.cleaned_data['category']
+		is_castrated=self.cleaned_data['is_castrated']
+		birth_date=self.cleaned_data['birth_date']
+		#print("Body Color: {} (before)\n".format(body_color))
+		#nval = ''.join(e for e in body_color if e != '[' and e != ']')		
+		#ls = nval.split(",")
+		#lx = []
+		#print("Body Color: {} (phase I)\n".format(nval))
+		#print("Body Color: {} (phase II)\n".format(ls))
+		
+		#for lprocess in ls:
+		#	lx.append(lprocess.split(":")[-1][1:-2])
+		
+		#value = ', '.join(lx)
+		#print("\nSave value for body color: {}\n\n".format(value))
+		data = GoatProfile(eartag_id=eartag_id, eartag_color=eartag_color, nickname=nickname, gender=gender, body_color=body_color, category=category, is_castrated=is_castrated, birth_date=birth_date)
+		data.save()
